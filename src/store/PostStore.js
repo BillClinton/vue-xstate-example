@@ -33,11 +33,6 @@ export const usePostStore = defineStore("post", {
           });
       });
     },
-    destroy(a, b, c) {
-      console.log(a);
-      console.log(b);
-      console.log(c);
-    },
     setLimit: function (limit) {
       this.limit = limit;
     },
