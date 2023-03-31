@@ -127,11 +127,19 @@ export default {
     };
   },
   computed: {
+    machine() {
+      if (this.parent.matches("adding")) {
+        return this.parent.children.create;
+      } else if (this.parent.matches("editing")) {
+        return this.parent.children.update;
+      }
+      return null;
+    },
     state() {
-      return this.parent.children.create?.state;
+      return this.machine?.state;
     },
     send() {
-      return this.parent.children.create?.send;
+      return this.machine?.send;
     },
   },
 };
