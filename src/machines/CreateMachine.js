@@ -1,6 +1,4 @@
 import { assign, createMachine, sendParent } from "xstate";
-import { isProxy, toRaw } from "vue";
-import { cloneDeep } from "lodash";
 
 const CreateMachine = createMachine(
   {
@@ -11,14 +9,14 @@ const CreateMachine = createMachine(
     context: {
       store: null,
       form: null,
-      post: null,
+      fields: null,
     },
     states: {
       idle: {
         entry: "notify",
         on: {
           INIT: {
-            actions: ["initialize", () => console.log("yoyoyoyoyoyoy")],
+            actions: "initialize",
             target: "adding",
           },
         },
