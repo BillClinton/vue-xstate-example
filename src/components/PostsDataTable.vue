@@ -56,6 +56,9 @@
     </template>
   </v-data-table-server>
 
+  <v-dialog v-model="formIsVisible" width="auto">
+    <PostForm />
+  </v-dialog>
   <v-dialog v-model="isDeleting" width="auto">
     <DeleteConfirmation :machine="deleteMachine" />
   </v-dialog>
@@ -65,10 +68,12 @@
 import { usePostStore } from "@/store/PostStore.js";
 import { useDataTableMachine } from "@/machines/DataTableMachine.js";
 import { storeToRefs } from "pinia";
+import PostForm from "@/components/PostForm.vue";
 import DeleteConfirmation from "@/components/DeleteConfirmation.vue";
 
 export default {
   components: {
+    PostForm,
     DeleteConfirmation,
   },
   data() {
@@ -101,11 +106,11 @@ export default {
     selected() {
       return this.state.context.selected;
     },
+    formIsVisible() {
+      return ["adding", "editing"].some(this.state.matches);
+    },
     isDeleting() {
       return this.state.matches("deleting");
-    },
-    deleteMachine() {
-      return this.state.children.delete;
     },
   },
   methods: {
