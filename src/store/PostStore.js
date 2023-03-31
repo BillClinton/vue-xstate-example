@@ -7,7 +7,7 @@ export const usePostStore = defineStore("post", {
     total: 0,
     host: "https://jsonplaceholder.typicode.com",
     path: "/posts",
-    limit: 20,
+    limit: 25,
     start: 0,
   }),
   actions: {
@@ -24,8 +24,31 @@ export const usePostStore = defineStore("post", {
         axios
           .get(url)
           .then((response) => {
-            this.data = response.data;
-            this.total = parseInt(response.headers["x-total-count"]);
+            me.data = response.data;
+            me.total = parseInt(response.headers["x-total-count"]);
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    create(post) {
+      const me = this;
+
+      let url = `${me.host}${me.path}`;
+
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`${url}`, {
+            data: [post],
+          })
+          .then((response) => {
+            console.log(response);
+            me.data.unshift(
+              Object.assign(post, { id: response.data.id }, post)
+            );
+            me.total--;
             resolve(response);
           })
           .catch((error) => {
@@ -42,8 +65,8 @@ export const usePostStore = defineStore("post", {
         axios
           .delete(`${url}/${ID}`)
           .then((response) => {
-            this.data = me.data.filter((rec) => rec.id !== ID);
-            this.total--;
+            me.data = me.data.filter((rec) => rec.id !== ID);
+            me.total--;
             resolve(response);
           })
           .catch((error) => {
