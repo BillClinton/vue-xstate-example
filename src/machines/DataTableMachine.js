@@ -46,12 +46,12 @@ const DataTableMachine = createMachine(
 
           CONFIGURE: [
             {
-              cond: "pageUpdateRequested",
+              cond: "pageConfig",
               actions: "setPage",
               target: "loading",
             },
             {
-              cond: "limitUpdateRequested",
+              cond: "limitConfig",
               actions: "setLimit",
               target: "loading",
             },
@@ -128,9 +128,8 @@ const DataTableMachine = createMachine(
       loadStore: (ctx) => ctx.store.load,
     },
     guards: {
-      pageUpdateRequested: (_, evt) =>
-        Object.prototype.hasOwnProperty.call(evt, "page"),
-      limitUpdateRequested: (_, evt) =>
+      pageConfig: (_, evt) => Object.prototype.hasOwnProperty.call(evt, "page"),
+      limitConfig: (_, evt) =>
         Object.prototype.hasOwnProperty.call(evt, "limit"),
     },
   }
