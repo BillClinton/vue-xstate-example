@@ -61,12 +61,16 @@ const DataTableMachine = createMachine(
             target: "loading",
           },
 
-          DELETE: {
-            target: "deleting",
-          },
-
           ADD: {
             target: "adding",
+          },
+
+          EDIT: {
+            target: "editing",
+          },
+
+          DELETE: {
+            target: "deleting",
           },
         },
       },
@@ -86,6 +90,22 @@ const DataTableMachine = createMachine(
           src: CreateMachine,
           data: {
             store: (ctx) => ctx.store,
+          },
+          onDone: "ready",
+          onError: "ready",
+        },
+      },
+
+      editing: {
+        entry: assign({
+          selected: (_, evt) => [evt.item],
+        }),
+        invoke: {
+          id: "update",
+          src: UpdateMachine,
+          data: {
+            store: (ctx) => ctx.store,
+            item: (_, evt) => evt.item,
           },
           onDone: "ready",
           onError: "ready",
