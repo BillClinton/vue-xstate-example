@@ -29,7 +29,7 @@
           <v-icon
             size="small"
             class="me-2"
-            @click="(evt) => send({ type: 'EDIT', evt })"
+            @click="(evt) => send({ type: 'EDIT', item: { ...item.raw } })"
           >
             mdi-pencil
           </v-icon>
