@@ -9,7 +9,6 @@ const DeleteMachine = createMachine(
     context: {
       store: null,
       item: null,
-      logTransition: true,
     },
     states: {
       confirming: {
