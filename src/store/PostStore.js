@@ -44,11 +44,33 @@ export const usePostStore = defineStore("post", {
             data: [post],
           })
           .then((response) => {
-            console.log(response);
             me.data.unshift(
               Object.assign(post, { id: response.data.id }, post)
             );
             me.total--;
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    update(post) {
+      const me = this;
+
+      let url = `${me.host}${me.path}`;
+
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${url}/${post.id}`, {
+            data: [post],
+          })
+          .then((response) => {
+            // find index of returned record in current data array
+            const idx = me.data.findIndex((rec) => rec.id === response.data.id);
+            if (idx > -1) {
+              me.data[idx] = response.data.data[0];
+            }
             resolve(response);
           })
           .catch((error) => {
