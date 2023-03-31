@@ -60,7 +60,7 @@
     <PostForm />
   </v-dialog>
   <v-dialog v-model="isDeleting" width="auto">
-    <DeleteConfirmation :machine="deleteMachine" />
+    <DeleteConfirmation />
   </v-dialog>
 </template>
 
