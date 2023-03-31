@@ -3,7 +3,7 @@
     v-model="selected"
     v-model:items-per-page="limit"
     fixed-header
-    height="calc(100vh - 160px)"
+    height="calc(100vh - 136px)"
     :headers="headers"
     :items="data"
     item-key="id"
@@ -15,17 +15,32 @@
     @update:page="(page) => send({ type: 'CONFIGURE', page })"
     @update:items-per-page="(limit) => send({ type: 'CONFIGURE', limit })"
   >
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        size="small"
-        class="me-2"
-        @click="(evt) => send({ type: 'EDIT', evt })"
+    <!-- Item (row) template -->
+    <template #item="{ item }">
+      <tr
+        :class="isSelected(item) ? 'selected' : ''"
+        @click="send({ type: 'SELECT', item: { ...item.raw } })"
       >
-        mdi-pencil
-      </v-icon>
-      <v-icon size="small" @click="(event) => send({ type: 'DELETE', item })">
-        mdi-delete
-      </v-icon>
+        <td>{{ item.raw.id }}</td>
+        <td>{{ item.raw.userId }}</td>
+        <td>{{ item.raw.title }}</td>
+        <td>{{ item.raw.body }}</td>
+        <td>
+          <v-icon
+            size="small"
+            class="me-2"
+            @click="(evt) => send({ type: 'EDIT', evt })"
+          >
+            mdi-pencil
+          </v-icon>
+          <v-icon
+            size="small"
+            @click="send({ type: 'DELETE', item: { ...item.raw } })"
+          >
+            mdi-delete
+          </v-icon>
+        </td>
+      </tr>
     </template>
 
     <template #bottom>
@@ -41,8 +56,8 @@
     </template>
   </v-data-table-server>
 
-  <v-dialog v-model="isDeleting" persistent width="auto">
-    <DeleteConfirmation />
+  <v-dialog v-model="isDeleting" width="auto">
+    <DeleteConfirmation :machine="deleteMachine" />
   </v-dialog>
 </template>
 
@@ -58,8 +73,6 @@ export default {
   },
   data() {
     return {
-      selectedItem: null,
-      sortBy: [],
       headers: [
         { title: "id", align: "right", key: "id" },
         { title: "userId", align: "right", key: "userId" },
@@ -71,8 +84,8 @@ export default {
   },
   setup() {
     const postStore = usePostStore(),
-      { state, send } = useDataTableMachine(),
-      { data, total, limit } = storeToRefs(postStore);
+      { data, total, limit } = storeToRefs(postStore),
+      { state, send } = useDataTableMachine();
 
     send({ type: "INIT", store: postStore });
 
@@ -85,13 +98,19 @@ export default {
     };
   },
   computed: {
+    selected() {
+      return this.state.context.selected;
+    },
     isDeleting() {
       return this.state.matches("deleting");
     },
+    deleteMachine() {
+      return this.state.children.delete;
+    },
   },
   methods: {
-    updatePage(page, e) {
-      console.log(page, e);
+    isSelected(item) {
+      return this.selected.some((e) => e.id === item.value);
     },
   },
 };
