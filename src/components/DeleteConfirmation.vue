@@ -28,27 +28,28 @@
 </template>
 
 <script>
-import { toRef } from "vue";
+import { useDataTableMachine } from "@/machines/DataTableMachine.js";
 
 export default {
-  props: {
-    machine: Object,
-  },
-  setup(props) {
-    const machine = toRef(props, "machine"),
-      { state, send } = machine.value;
+  setup() {
+    const { state: parent } = useDataTableMachine();
 
     return {
-      state,
-      send,
+      parent,
     };
   },
   computed: {
     title() {
-      return this.state.context.item.title;
+      return this.state?.context.item.title;
     },
     isDeleting() {
-      return this.state.matches("destroying");
+      return this.state?.matches("destroying");
+    },
+    state() {
+      return this.parent.children.delete?.state;
+    },
+    send() {
+      return this.parent.children.delete?.send;
     },
   },
 };
