@@ -78,16 +78,16 @@ export const usePostStore = defineStore("post", {
           });
       });
     },
-    destroy(ID) {
+    destroy(id) {
       const me = this;
 
       let url = `${me.host}${me.path}`;
 
       return new Promise((resolve, reject) => {
         axios
-          .delete(`${url}/${ID}`)
+          .delete(`${url}/${id}`)
           .then((response) => {
-            me.data = me.data.filter((rec) => rec.id !== ID);
+            me.data = me.data.filter((rec) => rec.id !== id);
             me.total--;
             resolve(response);
           })
