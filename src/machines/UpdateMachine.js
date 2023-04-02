@@ -19,14 +19,14 @@ const UpdateMachine = createMachine(
         entry: "notify",
         on: {
           INIT: {
-            actions: "initialize",
+            actions: ["initialize", "loadForm"],
             target: "editing",
           },
         },
       },
 
       editing: {
-        entry: ["loadForm", "notify"],
+        entry: "notify",
         on: {
           CANCEL: { target: "done" },
           UPDATE: { target: "validating" },
