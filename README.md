@@ -80,12 +80,12 @@ which it is configured to do regardless fo the current state of the DataTable Ma
 
 Visualize/Simulate: https://stately.ai/viz/465ca5de-a265-4973-9539-f0ebe17c3e58
 
-# default
+# default (readme boilerplate)
 
 
 
 
-### Project setup  (readme boilerplate)
+### Project setup
 
 ```
 # yarn
