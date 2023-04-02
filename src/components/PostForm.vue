@@ -107,8 +107,6 @@ export default {
     const form = this.$refs.postform,
       fields = this.fields;
 
-    console.log("mounted", this.state);
-
     this.send({ type: "INIT", form, fields });
   },
   data() {
