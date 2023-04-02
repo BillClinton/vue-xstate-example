@@ -9,6 +9,9 @@ import { fileURLToPath, URL } from "node:url";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/vue-xstate-example/",
+  build: {
+    outDir: "docs",
+  },
   plugins: [
     vue({
       template: { transformAssetUrls },
