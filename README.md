@@ -1,3 +1,34 @@
+# vue-xstate-example
+
+This is a simple rest application using Vue 3, Vuetify 3, XState 4 and Pinia.
+
+This app was created to explore how to structure Vue applications using XState.
+Specifically is the use of XState and Pinia an either/or decision, or can they be used together?
+If so, how do they best interact?
+
+The result is an application that uses Pinia to manage the quantitative state, in this case the API
+data, while XState handles the qualitative state, in this case the UI state.  The Pinia store is the
+single source of truth for data returned by the server.  The component states are defined by XState
+machines.  The XState machines receive events from UI components and call actions in my Pinia store
+when applicable.  In this way, XState can be seen as an intermediary between the Vue components and the
+Pinia data store.
+
+Another consideration is how to tie the state machines to the components.  Is it best implemented with
+one state machine that manages all components, or does each component have its own machine? How would
+multiple machines communicate with each other?  Does the component create the machine, or does the machine
+activate the component?
+
+I arrived at a solution with one "main" machine tied to the main data table.  This machine is able
+to invoke acions on the pinia store for operations like loading the data that do not involve other
+subcomponents.  For operations that involve other subcomponents such as adding and editing, the main
+machine invokes other state machines which manage the state of those subcompnents and can also
+invoke actions on the pinia store.
+
+This solution is working, but it may be able to be improved upon.  The issue is whether I should invoke
+the child machines from the main machine, or if I should make them available as actors through a service
+hook.  If these children machines were available through a service hook, they would be accessible to any machines
+or components.  On the other hand, I do like the current structure where children machines are invoked when
+needed, reach a final stage when their work is done and hand control back to the main machine.  TODO: explore this further.
 
 
 
@@ -54,7 +85,7 @@ Visualize/Simulate: https://stately.ai/viz/465ca5de-a265-4973-9539-f0ebe17c3e58
 
 
 
-## Project setup
+### Project setup  (readme boilerplate)
 
 ```
 # yarn
@@ -67,7 +98,7 @@ npm install
 pnpm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 
 ```
 # yarn
@@ -80,7 +111,7 @@ npm run dev
 pnpm dev
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 
 ```
 # yarn
@@ -93,6 +124,6 @@ npm run build
 pnpm build
 ```
 
-### Customize configuration
+#### Customize configuration
 
 See [Configuration Reference](https://vitejs.dev/config/).
