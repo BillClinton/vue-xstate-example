@@ -33,7 +33,7 @@ needed, reach a final stage when their work is done and hand control back to the
 
 
 ## XState Machines
-* note: Screenshot taken from the XState VSCode extenson which allows one to simulate the machines.  You can step through the operation of any of these machines by bringing them up in VSCode with the XState extension and clikcking the `Open Visual Editor` link above the machine definition
+* note: Screenshot taken from the XState VSCode extenson which allows one to simulate the machines.  You can step through the operation of any of these machines by bringing them up in VSCode with the XState extension and clicking the `Open Visual Editor` link above the machine definition
 
 ### DataTableMachine
 This could be considered the application's "Main" machine.  It handles the loading of the Data table,
