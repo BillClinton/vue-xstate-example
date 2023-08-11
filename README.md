@@ -33,8 +33,8 @@ needed, reach a final stage when their work is done and hand control back to the
 
 
 ## XState Machines
-* note: The code in the Vizualizer links has been altered in some cases in order for the machines
-to appear correctly in the Visualizer.  The actual code exists in the src/machines directory.
+* note: Screenshots taken from the XState VSCode extenson which allows one to simulate the machines.
+
 
 ### DataTableMachine
 This could be considered the application's "Main" machine.  It handles the loading of the Data table,
@@ -46,7 +46,7 @@ subcomponent, such as Deleting (delete confirmation dialog) or creating/editing 
 the DataTableMachine invokes machines (CreateMachine, UpdateMachine, DeleteMachine) which control the
 state of their subcomponents and invoke the Pinia store actions.
 
-Visualize/Simulate: https://stately.ai/viz/9d8e9257-b482-4d8c-823f-d4004946df2d
+![DataTableMachine](docs/assets/images/datatable_machine.png)
 
 ### CreateMachine
 The CreateMachine is invoked when the DataTableMachine transitions to the "adding" state.  The
