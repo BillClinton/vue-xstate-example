@@ -33,8 +33,7 @@ needed, reach a final stage when their work is done and hand control back to the
 
 
 ## XState Machines
-* note: Screenshots taken from the XState VSCode extenson which allows one to simulate the machines.
-
+* note: Screenshot taken from the XState VSCode extenson which allows one to simulate the machines.  You can step through the operation of any of these machines by bringing them up in VSCode with the XState extension and clikcking the `Open Visual Editor` link above the machine definition
 
 ### DataTableMachine
 This could be considered the application's "Main" machine.  It handles the loading of the Data table,
@@ -53,21 +52,15 @@ The CreateMachine is invoked when the DataTableMachine transitions to the "addin
 CreateMachine manages the state of the Postform component.  It validates the form when submitted,
 invokes the create method of the pinia store, and enters a done state upon success.
 
-Visualize/Simulate: https://stately.ai/viz/94ac943d-a009-4aef-a9e4-17f2d5a79302
-
 ### UpdateMachine
 The UpdateMachine is invoked when the DataTableMachine transitions to the "editing" state.  The
 UpdateMachine manages the state of the Postform component.  It loads the form, validates the form
 when submitted, invokes the update method of the pinia store, and enters a done state upon success.
 
-Visualize/Simulate: https://stately.ai/viz/461dae83-64cd-4ce6-8573-3d9c6b23da2f
-
 ### DeleteMachine
 The DeleteMachine is invoked when the DataTableMachine transitions to the "deleting" state.  The
 UpdateDeleteMachineMachine manages the state of the DeleteConfirmation component.  Upon confirmation,
 it invokes the destroy method of the pinia store, and enters a done state upon success.
-
-Visualize/Simulate: https://stately.ai/viz/484b39b7-efe0-4de0-9a05-bfbfcde8434d
 
 ### ToastMachine
 A simple machine that controls toast messages shown to the user.  It is using the Vuetify Snackbar component
@@ -78,11 +71,7 @@ This machine is exposed as an actor using a service hook.  The DataTable Machine
 obtain reference to this actor.  The DataTable Machine is then able to forward events to the ToastMachine,
 which it is configured to do regardless fo the current state of the DataTable Machine.
 
-Visualize/Simulate: https://stately.ai/viz/465ca5de-a265-4973-9539-f0ebe17c3e58
-
 # default (readme boilerplate)
-
-
 
 
 ### Project setup
